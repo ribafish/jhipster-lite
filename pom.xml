@@ -706,6 +706,41 @@
             </execution>
           </executions>
         </plugin>
+
+        <plugin>
+          <groupId>com.gradle</groupId>
+          <artifactId>gradle-enterprise-maven-extension</artifactId>
+          <configuration>
+            <gradleEnterprise>
+              <normalization>
+                <runtimeClassPath>
+                  <propertiesNormalizations>
+                    <propertiesNormalization>
+                      <path>**/git.properties</path>
+                      <ignoredProperties>
+                        <ignore>git.build.time</ignore>
+                      </ignoredProperties>
+                    </propertiesNormalization>
+                  </propertiesNormalizations>
+                </runtimeClassPath>
+              </normalization>
+              <plugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <outputs>
+                    <directories>
+                      <directory>
+                        <name>junit.platform.listeners.uid.tracking.output.dir</name>
+                        <path>${project.basedir}/target/test-ids</path>
+                      </directory>
+                    </directories>
+                  </outputs>
+                </plugin>
+              </plugins>
+            </gradleEnterprise>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
